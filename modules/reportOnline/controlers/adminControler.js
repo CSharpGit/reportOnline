@@ -5,6 +5,9 @@ function adminControler(){
     this.dbSet=function(){
         this.render({});
     }
+    this.allCharts=function(){
+        this.render({});
+    }
     this.login = function(){
         this.render({});
     }

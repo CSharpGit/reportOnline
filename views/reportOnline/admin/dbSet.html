@@ -4,8 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!--360浏览器优先以webkit内核解析-->
-    <title> - 数据源管理 -</title>
+    <title> - 数据库信息</title>
     <!-- <link rel="shortcut icon" href="favicon.ico"> -->
     <link href="/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
     <link href="/css/font-awesome.css?v=4.4.0" rel="stylesheet">
@@ -14,16 +13,129 @@
 </head>
 
 <body class="gray-bg">
-    <div class="wrapper wrapper-content">
+    <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
-            <div class="col-md-12">
-                配置数据源
+            <div class="col-sm-12">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <i class="fa fa-info-circle"></i> 当前数据库
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="widget lazur-bg p-xl">
+                                    <img src="/image/admin/setdb/plus.png" data-toggle="modal" data-target="#myModal"
+                                        class="img-responsive" alt="添加数据库">
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="widget lazur-bg p-xl">
+                                    <h2>
+                                        数据库名称
+                                    </h2>
+                                    <ul class="list-unstyled m-t-md">
+                                        <li>
+                                            <span class="fa fa-envelope m-r-xs"></span>
+                                            <label>typeName:</label>
+                                            MYSQL
+                                        </li>
+                                        <li>
+                                            <span class="fa fa-home m-r-xs"></span>
+                                            <label>version:</label>
+                                            5.5.8
+                                        </li>
+                                        <li>
+                                            <span class="fa fa-phone m-r-xs"></span>
+                                            <label>host:</label>
+                                            192.168.1.100
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer text-center">
+                        当前正在使用数据库：
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="panel panel-danger">
+                    <div class="panel-heading">
+                        历史数据库
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="widget red-bg p-lg text-center">
+                                    <div class="m-b-md">
+                                        <i class="fa fa-database fa-4x"></i>
+                                        <h1 class="m-xs">MYSQL</h1>
+                                        <h3 class="font-bold no-margins">
+                                            数据库名称
+                                        </h3>
+                                        <small>2019-05-30</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer text-center">
+                        数据库使用记录
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
+    <div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content animated bounceInRight">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">关闭</span>
+                    </button>
+                    <i class="fa fa-database modal-icon"></i>
+                    <h4 class="modal-title">绑定数据库</h4>
+                    <small class="font-bold">添加数据源
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>数据源名称</label>
+                        <input type="text" placeholder="为您的数据源命名" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>数据库名称</label>
+                        <input type="text" placeholder="请输入您需要连接数据库的名称" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>用户名</label>
+                        <input type="text" placeholder="请输入远程数据库用户名" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>密&nbsp;&nbsp;码</label>
+                        <input type="password" placeholder="请输入远程数据库密码" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>主机地址</label>
+                        <input type="url" placeholder="请输入远程数据库主机地址" class="form-control">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- 全局js -->
     <script src="/js/jquery.min.js?v=2.1.4"></script>
     <script src="/js/bootstrap.min.js?v=3.3.6"></script>
-    <script src="/js/plugins/layer/layer.min.js"></script>
+
+    <!-- 自定义js -->
+    <script src="/js/content.js?v=1.0.0"></script>
 </body>
+
 </html>
