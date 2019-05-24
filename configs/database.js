@@ -2,13 +2,10 @@ var database = {
     
     Mysql : {
         typeName: 'Mysql',           //数据库类型名称
-        host    : '192.168.1.193',
-        //host    : '127.0.0.1',
-        user: 'www',
-        //user    : 'root',
-        password: '123456',
-        //password: 'root',
-        database: 'ranyun_shop'
+        host    : '148.70.205.205',
+        user: 'root',
+        password: 'femsQuan@666',
+        database: 'report_online'
     },
 
     Mariadb : {

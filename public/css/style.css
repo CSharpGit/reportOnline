@@ -4061,6 +4061,19 @@ code {
     border-width: 1px 0px;
 }
 
+.ibox-footer {
+    /* height: 41px; */
+    border-color: #edf1f2;
+    background-color: #e5f0f0;
+    color: #333;
+    font-weight: 700;
+    border-radius: 2px 2px 0 0;
+    padding: 15px 15px 3px 15px;
+    border-bottom: 1px solid transparent;
+    display: block;
+    clear: both;
+}
+
 table.table-mail tr td {
     padding: 12px;
 }
@@ -7791,7 +7804,7 @@ body.skin-3 {
 /* ECHARTS  */
 
 .echarts {
-    height: 240px;
+    height: 300px;
 }
 
 .checkbox-inline,
