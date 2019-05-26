@@ -1,7 +1,7 @@
-function homeControler(){
+function indexControler(){
     this.index = function(){
         this.render({});
     }
 }
 
-module.exports = homeControler;
+module.exports = indexControler;

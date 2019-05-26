@@ -377,7 +377,7 @@
     <script src="/js/bootstrap.min.js?v=3.3.6"></script>
 
     <!-- ECharts -->
-    <script src="/js/plugins/echarts/echarts.js"></script>
+    <script src="/js/plugins/echarts/echarts.min.js"></script>
 
     <!-- 引入 vintage 主题 -->
     <script src="/js/plugins/echarts/theme/chalk.js"></script>
@@ -406,7 +406,7 @@
             var lineChart = echarts.init(document.getElementById("echarts-line-chart"));
             $.ajax({
                 type: "GET",
-                url: "http://127.0.0.1:8888/reportOnline/admin/ajaxData?type='<%=type%>'",
+                url: "http://127.0.0.1:8888/admin/home/ajaxData?type='<%=type%>'",
                 dataType: "json",
                 success: function (data) {
                     getData = data;
@@ -424,7 +424,6 @@
             });
         });
     </script>
-
 </body>
 
 </html>

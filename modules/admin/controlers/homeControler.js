@@ -1,10 +1,17 @@
-function adminControler() {
+function homeControler(){
     this.index = function () {
+        var data={title:'主页'}
+        // var userInfor=this.model("DataProcess").getUseInfo();
+        // data.usName=userInfor[0].id;
+        // console.log("########################获取session信息:",userInfor[0]);
+        // console.log("#######################发送前端信息:",userInfor[0]['id']);
+        this.render(data);
+    }
+    
+    this.dbset = function () {
         this.render({});
     }
-    this.dbSet = function () {
-        this.render({});
-    }
+
     this.allCharts = function () {
         this.render({});
     }
@@ -26,12 +33,6 @@ function adminControler() {
             }
         });
     }
-    this.login = function () {
-        this.render({});
-    }
-    this.register = function () {
-        this.render({});
-    }
 }
 
-module.exports = adminControler;
+module.exports = homeControler;

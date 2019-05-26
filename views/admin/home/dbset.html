@@ -101,30 +101,41 @@
                     <small class="font-bold">添加数据源
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label>数据源名称</label>
-                        <input type="text" placeholder="为您的数据源命名" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label>数据库名称</label>
-                        <input type="text" placeholder="请输入您需要连接数据库的名称" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label>用户名</label>
-                        <input type="text" placeholder="请输入远程数据库用户名" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label>密&nbsp;&nbsp;码</label>
-                        <input type="password" placeholder="请输入远程数据库密码" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label>主机地址</label>
-                        <input type="url" placeholder="请输入远程数据库主机地址" class="form-control">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary">保存</button>
+                    <form class="m-t" role="form" method="post" data-form-async="json" action="/admin/usdb/add">
+                        <div class="form-group">
+                            <label>数据源名称</label>
+                            <input type="text" name="db_lable" placeholder="为您的数据源命名" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>数据库类型</label>
+                            <select class="form-control m-b" name="db_type">
+                                <option value="0">MySQL</option>
+                                <option value="1">SQL Server</option>
+                                <option value="2">Oracle</option>
+                                <option value="3">MogonDB</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>数据库名称</label>
+                            <input type="text" name="db_name" placeholder="请输入您需要连接数据库的名称" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>用户名</label>
+                            <input type="text" name="db_user" placeholder="请输入远程数据库用户名" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>密&nbsp;&nbsp;码</label>
+                            <input type="password" name="db_pasw" placeholder="请输入远程数据库密码" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>主机地址</label>
+                            <input type="url" name="db_host" placeholder="请输入远程数据库主机地址" class="form-control">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+                            <button type="submit" class="btn btn-primary">保存</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -136,6 +147,10 @@
 
     <!-- 自定义js -->
     <script src="/js/content.js?v=1.0.0"></script>
+
+    <!-- 自定义 -->
+    <script src="/javascripts/app/app.js"></script>
+    <script src="/javascripts/app/dataAsync.js"></script>
 </body>
 
 </html>
