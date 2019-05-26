@@ -9,8 +9,8 @@ function UserDbModel() {
             message: "数据校验失败"
         };
 
-        var userInfo=this.model('DataProcess').getUseInfo();
-        var usid=userInfo[0].id;
+        var userInfo = this.model('DataProcess').getUseInfo();
+        var usid = userInfo[0].id;
 
         var dbLable = this.POST('!db_lable', { default: false });
         if (dbLable === false) {
@@ -48,7 +48,7 @@ function UserDbModel() {
         }
 
         var dbPassWord = this.POST('db_pasw', { default: false });
-        if (dbPassWord===false) {
+        if (dbPassWord === false) {
             data.message = "请填写远程数据库登录密码！";
             callback(data);
             return;
@@ -59,7 +59,7 @@ function UserDbModel() {
         var struct = [
             //待写入的第一组数据
             {
-                usid:usid,
+                usid: usid,
                 db_lable: dbLable,
                 db_type: dbType,
                 db_name: dbName,
@@ -69,7 +69,6 @@ function UserDbModel() {
                 db_addtime: 'now()'
             },
         ];
-        console.log('&&&&&&&&&&&&&&&&&&&&&&&从表单接收数据：', struct);
 
         //初始化构造查询对象
         var sqlStruct = this.SqlStruct(struct);
@@ -82,5 +81,44 @@ function UserDbModel() {
             callback(data);
         });
     }
+
+    /**
+     * 获取用户数据库（源）信息
+     */
+    this.getDbInfo = function (params, callback) {
+        var userInfo = this.model("DataProcess").getUseInfo();
+        var usid = userInfo[0].id;
+        var struct = {
+            where: [],
+            groupBy: [],
+            orderBy: [],
+            limit: []
+        };
+
+        // 添加查询条件
+        struct.where.push(" usid='" + usid + "'");
+
+        //初始化构造查询对象
+        var sqlStruct = this.SqlStruct(struct);
+
+        //调用服务类进行查询
+        var usDb = this.service('UserDb');
+        usDb.getDbInfo(sqlStruct, function (res) {
+            var resData={
+                dbUsing:[],
+                dbUsed:[]
+            };
+            if (res.length) {
+                res.forEach(e => {
+                    if(e.db_use=='0'){
+                        resData.dbUsed.push(e);
+                    }else{
+                        resData.dbUsing.push(e);
+                    }
+                });
+                callback(resData);
+            }
+        });
+    }
 }
-module.exports=UserDbModel;
+module.exports = UserDbModel;

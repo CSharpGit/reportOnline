@@ -31,23 +31,34 @@
                             <div class="col-sm-4">
                                 <div class="widget lazur-bg p-xl">
                                     <h2>
-                                        数据库名称
+                                        <%= dbUsing[0].db_lable %>
                                     </h2>
                                     <ul class="list-unstyled m-t-md">
                                         <li>
                                             <span class="fa fa-envelope m-r-xs"></span>
-                                            <label>typeName:</label>
-                                            MYSQL
+                                            <label>数据库类型:</label>
+                                            <% if(dbUsing[0].db_type=='0'){ %>
+                                            <span>MySQL</span>
+                                            <% } %>
+                                            <% if(dbUsing[0].db_type=='1'){ %>
+                                            <span>SQL Server</span>
+                                            <% } %>
+                                            <% if(dbUsing[0].db_type=='2'){ %>
+                                            <span>Oracle</span>
+                                            <% } %>
+                                            <% if(dbUsing[0].db_type=='3'){ %>
+                                            <span>MongoDB</span>
+                                            <% } %>
                                         </li>
                                         <li>
                                             <span class="fa fa-home m-r-xs"></span>
-                                            <label>version:</label>
-                                            5.5.8
+                                            <label>主机地址:</label>
+                                            <span><%= dbUsing[0].db_host %></span>
                                         </li>
                                         <li>
                                             <span class="fa fa-phone m-r-xs"></span>
-                                            <label>host:</label>
-                                            192.168.1.100
+                                            <label>绑定时间:</label>
+                                            <span><%= Object.getStandardDate(dbUsing[0].db_addtime) %></span>
                                         </li>
                                     </ul>
                                 </div>
@@ -55,7 +66,7 @@
                         </div>
                     </div>
                     <div class="panel-footer text-center">
-                        当前正在使用数据库：
+                        当前正在使用数据库：<%= dbUsing[0].db_name %>
                     </div>
                 </div>
             </div>
@@ -66,18 +77,33 @@
                     </div>
                     <div class="panel-body">
                         <div class="row">
+                            <% for(var i=0;i<dbUsed.length;i++ ){ %>
                             <div class="col-sm-4">
                                 <div class="widget red-bg p-lg text-center">
                                     <div class="m-b-md">
                                         <i class="fa fa-database fa-4x"></i>
-                                        <h1 class="m-xs">MYSQL</h1>
+                                        <h1 class="m-xs">
+                                            <% if(dbUsed[i].db_type=='0'){ %>
+                                            MySQL
+                                            <% } %>
+                                            <% if(dbUsed[i].db_type=='1'){ %>
+                                            SQL Server
+                                            <% } %>
+                                            <% if(dbUsed[i].db_type=='2'){ %>
+                                            Oracle
+                                            <% } %>
+                                            <% if(dbUsed[i].db_type=='3'){ %>
+                                            MongoDB
+                                            <% } %>
+                                        </h1>
                                         <h3 class="font-bold no-margins">
-                                            数据库名称
+                                            <%= dbUsed[i].db_lable %>
                                         </h3>
-                                        <small>2019-05-30</small>
+                                        <small><%= Object.getStandardDate(dbUsed[i].db_addtime) %></small>
                                     </div>
                                 </div>
                             </div>
+                            <% } %>
                         </div>
                     </div>
                     <div class="panel-footer text-center">

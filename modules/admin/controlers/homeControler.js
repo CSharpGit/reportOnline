@@ -9,7 +9,13 @@ function homeControler(){
     }
     
     this.dbset = function () {
-        this.render({});
+        var that=this;
+        var usDb=this.model('UserDb');
+        var data={};
+        usDb.getDbInfo(data,function(res){
+            console.log('获取用户数据库信息：',res);
+            that.render(res);
+        });
     }
 
     this.allCharts = function () {

@@ -12,6 +12,22 @@ function UserDbService(){
             callback(error,results,fields);
         });
     }
+
+    /**
+     * 获取用户数据库（源）信息
+     */
+    this.getDbInfo=function(sqlStruct,callback){
+        var sql = 'select * from user_db' +
+        sqlStruct.where() + 
+        sqlStruct.groupBy() + 
+        sqlStruct.orderBy() + 
+        sqlStruct.limit();
+        this.DB().select(sql,function(error,results,fields){
+            if(!error){
+                callback(results);
+            }
+        });
+    }
 }
 
 module.exports = UserDbService;
