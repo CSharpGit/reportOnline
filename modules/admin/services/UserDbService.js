@@ -28,6 +28,23 @@ function UserDbService(){
             }
         });
     }
+
+    /**
+     * 检查用户数据库是否可用
+     */
+    this.getTables=function(dbInfoStruct,callback) {
+        var mysql = require('mysql');
+        var connection = mysql.createConnection({
+            host: dbInfoStruct.db_host,
+            user: dbInfoStruct.db_user,
+            password: dbInfoStruct.db_pasw,
+            database: dbInfoStruct.db_name
+        });
+        connection.connect();
+        connection.query('show tables', function (error, results, fields) {
+            callback(error, results, fields);
+        });
+    }
 }
 
 module.exports = UserDbService;

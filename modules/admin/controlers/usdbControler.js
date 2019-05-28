@@ -6,8 +6,14 @@ function usdbControler(){
         var that = this;
         var data = {};
         var usDb = this.model('UserDb');
-        usDb.add(data, function(res) {
-            that.renderJson(res);
+        usDb.dbEnable(data,function(res){
+            if (res.error === 1) {//用户数据库无法访问，配置信息不正确
+                that.renderJson(res);
+                return;
+            }
+            usDb.insertDbInfor(data, function(res) {
+                that.renderJson(res);
+            });
         });
     }
 }

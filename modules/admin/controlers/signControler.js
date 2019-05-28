@@ -13,9 +13,8 @@ function signControler(){
     this.regist = function() {
         var that = this;
         var data = {};
-        var state = 0;
         var userInfor = this.model('UserInfor');
-        userInfor.acountExists({}, function(res) {
+        userInfor.acountExists(data, function(res) {
             if (res.error === 1) {//账户存在，发送账户已注册信息
                 that.renderJson(res);
                 return;

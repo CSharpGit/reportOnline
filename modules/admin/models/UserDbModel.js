@@ -2,7 +2,7 @@ function UserDbModel() {
     /**
       * 写入用户注册信息
      */
-    this.add = function (params, callback) {
+    this.insertDbInfor = function (params, callback) {
         //返回的数据格式
         var data = {
             error: 1,
@@ -11,53 +11,14 @@ function UserDbModel() {
 
         var userInfo = this.model('DataProcess').getUseInfo();
         var usid = userInfo[0].id;
-
         var dbLable = this.POST('!db_lable', { default: false });
-        if (dbLable === false) {
-            data.message = "为您的数据源命名吧！";
-            callback(data);
-            return;
-        }
-
         var dbType = this.POST('db_type', { default: false });
-        if (dbType === false) {
-            data.message = "请选择您的数据库类型！";
-            callback(data);
-            return;
-        }
-
         var dbName = this.POST('db_name', { default: false });
-        if (dbName === false) {
-            data.message = "请填写远程数据库名称！";
-            callback(data);
-            return;
-        }
-
         var dbUser = this.POST('db_user', { default: false });
-        if (dbUser === false) {
-            data.message = "请填写远程数据库登录名！";
-            callback(data);
-            return;
-        }
-
         var dbHost = this.POST('db_host', { default: false });
-        if (dbHost === false) {
-            data.message = "请填写远程数据库链接地址！";
-            callback(data);
-            return;
-        }
+        var dbPassWord = this.POST('!db_pasw', { default: false });
 
-        var dbPassWord = this.POST('db_pasw', { default: false });
-        if (dbPassWord === false) {
-            data.message = "请填写远程数据库登录密码！";
-            callback(data);
-            return;
-        }
-
-        //使用密码生成器生成密码
-        var pwd = this.model('DataProcess').createPasswd(dbPassWord);
-        var struct = [
-            //待写入的第一组数据
+        var dbInfo = [
             {
                 usid: usid,
                 db_lable: dbLable,
@@ -65,17 +26,21 @@ function UserDbModel() {
                 db_name: dbName,
                 db_user: dbUser,
                 db_host: dbHost,
-                db_pasw: pwd,
+                db_pasw: dbPassWord,
                 db_addtime: 'now()'
             },
         ];
+        var checkResults = checkFormPost(dbInfo[0]);
+        if (!checkResults.next) {
+            data.message = checkResults.message;
+            callback(data);
+            return;
+        }
 
         //初始化构造查询对象
-        var sqlStruct = this.SqlStruct(struct);
-
-        var _db = this.service('UserDB');
-
-        _db.add(sqlStruct, function (error, results, fields) {
+        var sqlStruct = this.SqlStruct(dbInfo);
+        var usDb = this.service('UserDb');
+        usDb.add(sqlStruct, function (error, results, fields) {
             data = error ?
                 { error: 1, message: "数据写入失败！" } : { error: 0, message: '添加数据源成功，等待跳转...', uri: '/admin/home/dbset' };
             callback(data);
@@ -104,20 +69,78 @@ function UserDbModel() {
         //调用服务类进行查询
         var usDb = this.service('UserDb');
         usDb.getDbInfo(sqlStruct, function (res) {
-            var resData={
-                dbUsing:[],
-                dbUsed:[]
+            var resData = {
+                dbUsing: [],
+                dbUsed: []
             };
             if (res.length) {
                 res.forEach(e => {
-                    if(e.db_use=='0'){
+                    if (e.db_use == '0') {
                         resData.dbUsed.push(e);
-                    }else{
+                    } else {
                         resData.dbUsing.push(e);
                     }
                 });
                 callback(resData);
             }
+        });
+    }
+
+    /**
+     * 检查表单填写情况
+     */
+    function checkFormPost(formData) {
+        var results = {
+            key: '',
+            message: '',
+            next: true
+        }
+        for (var e in formData) {
+            results.key = e;
+            if (formData[e] === false) {
+                results.message = "表单中不存在“name=" + e + "”的元素";
+                results.next = false;
+                break;
+            }
+            if (formData[e] === '') {
+                results.message = "请检查必填项是否全部填写完成！";
+                results.next = false;
+                break;
+            }
+        }
+        return results;
+    }
+
+    /**
+     * 检查用户数据库是否可用
+     */
+    this.dbEnable = function (params, callback) {
+        //返回的数据格式
+        var data = {
+            error: 1,
+            message: "数据校验失败"
+        };
+        var dbName = this.POST('db_name', { default: false });
+        var dbUser = this.POST('db_user', { default: false });
+        var dbHost = this.POST('db_host', { default: false });
+        var dbPassWord = this.POST('!db_pasw', { default: false });
+
+        var dbInfo={
+            db_name: dbName,
+            db_user: dbUser,
+            db_host: dbHost,
+            db_pasw: dbPassWord
+        };
+        var checkResults = checkFormPost(dbInfo);
+        if (!checkResults.next) {
+            data.message = checkResults.message;
+            callback(data);
+            return;
+        }
+        var usDb = this.service('UserDb');
+        usDb.getTables(dbInfo, function (error, results, fields) {
+            results = error ? { error: 1, message: "数据库初始化错误，请检查数据库相关信息!" } : { error: 0 };
+            callback(results);
         });
     }
 }
