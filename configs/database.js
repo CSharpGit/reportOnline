@@ -2,7 +2,7 @@ var database = {
     
     Mysql : {
         typeName: 'Mysql',           //数据库类型名称
-        host    : '148.70.205.205',
+        host    : '118.24.37.45',
         user: 'root',
         password: 'femsQuan@666',
         database: 'report_online'

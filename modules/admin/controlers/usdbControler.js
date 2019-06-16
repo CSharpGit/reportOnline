@@ -16,5 +16,31 @@ function usdbControler(){
             });
         });
     }
+
+    /**
+     * 删除用户数据源
+     */
+    this.dbDel = function(){
+        var that=this;
+        var usDb = this.model('UserDb');
+        usDb.dbDel({},function(res){
+            that.renderJson(res);
+        });
+    }
+
+    /*
+     *修改数据源
+     */
+    this.dbSwitch = function() {
+        var that = this;
+        var usDb = this.model('UserDb');
+        usDb.reInit({},function(res){
+            if(!res.error){
+                usDb.dbSwitch({}, function(res) {
+                    that.renderJson(res);
+                });
+            }
+        });
+    }
 }
 module.exports=usdbControler;

@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> - 百度ECHarts</title>
     <!-- <link rel="shortcut icon" href="favicon.ico"> -->
+    <link href="/css/plugins/switchery/switchery.css" rel="stylesheet">
     <link href="/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
     <link href="/css/font-awesome.css?v=4.4.0" rel="stylesheet">
     <link href="/css/animate.css" rel="stylesheet">
@@ -15,12 +16,82 @@
 </head>
 
 <body class="gray-bg">
+    <div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content animated bounceInRight">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">关闭</span>
+                    </button>
+                    <i class="fa fa-database modal-icon"></i>
+                    <h4 class="modal-title">报表平台测试数据库</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <input type="text" placeholder="请输入数据条数" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-sm-12 text-center">
+                                <h2>students</h2>
+                            </div>
+                            <div class="text-center">
+                                <div class="col-sm-3" style="padding:10px;"><button type="button"
+                                        class="btn btn-info db_chose">id</button></div>
+                                <div class="col-sm-3" style="padding:10px;"><button type="button"
+                                        class="btn btn-info db_chose">s_num</button></div>
+                                <div class="col-sm-3" style="padding:10px;"><button type="button"
+                                        class="btn btn-info db_chose">s_name</button></div>
+                                <div class="col-sm-3" style="padding:10px;"><button type="button"
+                                        class="btn btn-info db_chose">s_class</button></div>
+                                <div class="col-sm-3" style="padding:10px;"><button type="button"
+                                        class="btn btn-info db_chose">s_adress</button></div>
+                                <div class="col-sm-3" style="padding:10px;"><button type="button"
+                                        class="btn btn-info db_chose">s_phone</button></div>
+                                <div class="col-sm-3" style="padding:10px;"><button type="button"
+                                        class="btn btn-info db_chose">s_credit1</button></div>
+                                <div class="col-sm-3" style="padding:10px;"><button type="button"
+                                        class="btn btn-info db_chose">s_credit2</button></div>
+                                <div class="col-sm-3" style="padding:10px;"><button type="button"
+                                        class="btn btn-info db_chose">s_credit3</button></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+                        <button type="submit" class="btn btn-primary">提交</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
             <div class="col-sm-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>折线图</h5>
+                        <%{
+                            var chartType={
+                                line:"折线图",
+                                bar:"柱状图",
+                                pie:"饼状图",
+                                radar:"雷达图",
+                                funnel:"漏斗图",
+                                scatter:"散点图",
+                                k:"K线图",
+                                chord:"和弦图",
+                                force:"力导向布局图",
+                                gauge:"仪表盘",
+                                map:"中国地图"
+                            };
+                            var chartName=chartType[type];
+                        }%>
+                        <h5>
+                            <%= chartName %>
+                        </h5>
                         <div class="ibox-tools">
                             <a class="collapse-link">
                                 <!-- <i class="fa fa-chevron-up"></i> -->
@@ -30,9 +101,11 @@
                                 <i class="fa fa-wrench"></i>
                             </a>
                             <ul class="dropdown-menu dropdown-user">
-                                <li><a href="graph_flot.html#">数据接入</a>
+                                <li><a href="graph_flot.html#">下载</a>
                                 </li>
-                                <li><a href="graph_flot.html#">设置图表</a>
+                                <li><a href="graph_flot.html#">分享</a>
+                                </li>
+                                <li><a href="graph_flot.html#">导出PDF</a>
                                 </li>
                             </ul>
                             <a class="close-link">
@@ -41,8 +114,23 @@
                         </div>
                     </div>
                     <div class="ibox-content">
-                        <div class="echarts" id="echarts-line-chart">
-
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div style="height:300px;overflow-y:auto" id="out">
+                                </div>
+                                <div class="col-sm-6">
+                                    <button type="button" data-toggle="modal" data-target="#myModal"
+                                        style="width: 100%;margin-top:50px;" class="btn btn-primary">导入数据</button>
+                                </div>
+                                <div class="col-sm-6">
+                                    <button type="button" id="start" style="width: 100%;margin-top:50px;"
+                                        class="btn btn-success">应用</button>
+                                </div>
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="echarts" style="height:400px" id="chart">
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="ibox-footer">
@@ -397,30 +485,52 @@
     <!-- 自定义js -->
     <script src="/js/content.js?v=1.0.0"></script>
 
-    <!-- ECharts demo data -->
-    <!-- <script src="/js/demo/echarts-demo.js"></script> -->
+    <!-- Switchery -->
+    <script src="/js/plugins/switchery/switchery.js"></script>
+
+
+    <!-- json对象转表单 表单转json对象-->
+    <script src="/javascripts/app/json_form.js"></script>
 
     <script>
+        $("#start").click(function () {
+            alert("应用成功！")
+        });
+        $(".db_chose").click(function () {
+            if ($(this).hasClass("btn-info")) {
+                $(this).removeClass("btn-info");
+                $(this).addClass("btn-success");
+            } else if ($(this).hasClass("btn-success")) {
+                $(this).removeClass("btn-success");
+                $(this).addClass("btn-info");
+            }
+        });
         $(function () {
             var getData;
-            var lineChart = echarts.init(document.getElementById("echarts-line-chart"));
+            var drawChart = echarts.init(document.getElementById("chart"));
             $.ajax({
                 type: "GET",
-                url: "http://127.0.0.1:8888/admin/home/ajaxData?type='<%=type%>'",
+                url: "http://127.0.0.1:8888/admin/home/getOption?type='<%=type%>'",
                 dataType: "json",
                 success: function (data) {
                     getData = data;
                     console.log("接收的数据：", data);
-                    lineChart.setOption(getData);
-                    $(window).resize(lineChart.resize);
+                    drawChart.setOption(getData);
+                    $(window).resize(drawChart.resize);
+
+                    deepTraverse(data);
+                    var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
+                    elems.forEach(function (html) {
+                        var switchery = new Switchery(html);
+                    });
                 }
             });
             $('a.theme-plan-group').on('click', function () {
                 var themeName = $(this).attr("title");
-                lineChart.dispose();
-                lineChart = echarts.init(document.getElementById("echarts-line-chart"), themeName);
-                lineChart.setOption(getData);
-                $(window).resize(lineChart.resize);
+                drawChart.dispose();
+                drawChart = echarts.init(document.getElementById("chart"), themeName);
+                drawChart.setOption(getData);
+                $(window).resize(drawChart.resize);
             });
         });
     </script>

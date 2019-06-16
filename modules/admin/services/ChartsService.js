@@ -1,5 +1,5 @@
 function ChartsService(){
-    this.line=function(sqlStruct,callback){
+    this.getOption=function(sqlStruct,callback){
         var sql = 'select chart_option from chart_basic' +
         sqlStruct.where() + 
         sqlStruct.groupBy() + 
@@ -7,6 +7,7 @@ function ChartsService(){
         sqlStruct.limit();
         this.DB().select(sql,function(error,results,fields){
             if(!error){
+                console.log("setOption返回结果：",results);
                 callback(results);
             }
         });

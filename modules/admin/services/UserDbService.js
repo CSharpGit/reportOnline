@@ -45,6 +45,29 @@ function UserDbService(){
             callback(error, results, fields);
         });
     }
+
+    /**
+     * 删除用户数据源信息
+     */
+    this.dbDel = function(sqlStruct,callback){
+        var st  = sqlStruct;
+        var sql = 'delete from user_db ' + st.where();
+        this.DB().delete(sql,function(error,results,fields){
+            callback(error,results,fields);
+        });
+    }
+
+    /**
+     * 切换数据源信息
+     */
+    this.dbSwitch = function(sqlStruct,callback){
+        var st  = sqlStruct;
+        var sql = 'update user_db set ' + st.updateFeilds() + st.where();
+        console.log("*******************sql语句：",sql);
+        this.DB().update(sql,function(error,results,fields){
+            callback(error,results,fields);
+        });
+    }
 }
 
 module.exports = UserDbService;

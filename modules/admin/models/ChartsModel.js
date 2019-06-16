@@ -1,5 +1,5 @@
 function ChartsModel() {
-    this.line = function (data, callback) {
+    this.getOption = function (data, callback) {
         var struct = {
             where: [],
             groupBy: [],
@@ -17,7 +17,7 @@ function ChartsModel() {
 
         //调用服务类进行查询
         var charts = this.service('Charts');
-        charts.line(sqlStruct, function (res) {
+        charts.getOption(sqlStruct, function (res) {
             if (res.length) {
                 callback(res);
             }

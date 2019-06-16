@@ -19,7 +19,6 @@ function AccountService(){
         var sql = 'insert into us_info ' +
         st.insertNames() +
         st.insertValues();
-        console.log('**********************注册用户sql语句：',sql);
         this.DB().insert(sql,function(error,results,fields){
             callback(error,results,fields);
         });

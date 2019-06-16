@@ -28,6 +28,8 @@
                                         class="img-responsive" alt="添加数据库">
                                 </div>
                             </div>
+                            <% if(dbUsing.length!=0){ %>
+
                             <div class="col-sm-4">
                                 <div class="widget lazur-bg p-xl">
                                     <h2>
@@ -63,10 +65,13 @@
                                     </ul>
                                 </div>
                             </div>
+                            <% } %>
                         </div>
                     </div>
                     <div class="panel-footer text-center">
-                        当前正在使用数据库：<%= dbUsing[0].db_name %>
+                        <% if(dbUsing.length>0){ %>
+                        当前正在使用数据库：<span><%= dbUsing[0].db_name %></span>
+                        <% } %>
                     </div>
                 </div>
             </div>
@@ -77,7 +82,7 @@
                     </div>
                     <div class="panel-body">
                         <div class="row">
-                            <% for(var i=0;i<dbUsed.length;i++ ){ %>
+                            <% if(dbUsed.length>0){for(var i=0;i<dbUsed.length;i++ ){ %>
                             <div class="col-sm-4">
                                 <div class="widget red-bg p-lg text-center">
                                     <div class="m-b-md">
@@ -101,13 +106,36 @@
                                         </h3>
                                         <small><%= Object.getStandardDate(dbUsed[i].db_addtime) %></small>
                                     </div>
+                                    <% if(dbUsed[i].db_use=='0'){ %>
+                                    <div class="col-sm-6">
+                                        <button type="button" data-async="get"
+                                            data-uri="/admin/usdb/dbSwitch?id=<%= dbUsed[i].id %>&uid=<%= dbUsed[i].usid %>"
+                                            class="btn btn-primary">使用</button>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <button type="button" data-async="get"
+                                            data-uri="/admin/usdb/dbDel?id=<%= dbUsed[i].id %>&uid=<%= dbUsed[i].usid %>"
+                                            class="btn btn-danger">删除</button>
+                                    </div>
+                                    <% } %>
+                                </div>
+                            </div>
+                            <% }} else{ %>
+                            <div class="col-sm-4">
+                                <div class="widget red-bg p-lg text-center">
+                                    <div class="m-b-md">
+                                        <i class="fa fa-database fa-4x"></i>
+                                        <h1 class="m-xs">
+                                            空空如也！
+                                        </h1>
+                                    </div>
                                 </div>
                             </div>
                             <% } %>
                         </div>
                     </div>
                     <div class="panel-footer text-center">
-                        数据库使用记录
+                        数据库使用记录！
                     </div>
                 </div>
             </div>

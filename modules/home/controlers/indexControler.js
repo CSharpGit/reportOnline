@@ -1,6 +1,7 @@
 function indexControler(){
+    var that=this;
     this.index = function(){
-        this.render({});
+        that.render({});
     }
 }
 

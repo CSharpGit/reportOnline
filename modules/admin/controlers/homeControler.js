@@ -20,11 +20,11 @@ function homeControler(){
     this.allCharts = function () {
         this.render({});
     }
-    this.ajaxData = function () {
+    this.getOption = function () {
         var that = this;
         var charts = this.model('Charts');
         var data = {};
-        charts.line(data, function (res) {
+        charts.getOption(data, function (res) {
             that.renderJson(JSON.parse(res[0].chart_option));
         });
     }

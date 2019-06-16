@@ -8,7 +8,7 @@ body{background-color: #1b1b1b}
 	z-index:999;
 	height:50px;
 	padding: 0 30px;
-	background: rgba(28, 35, 39, 0.8);
+	/* background: rgba(28, 35, 39, 0.8); */
 }
 /*左侧logo*/
 .header .left{
